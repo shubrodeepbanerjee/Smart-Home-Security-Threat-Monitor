@@ -1,0 +1,4 @@
+package com.security.service;
+import com.security.model.SecurityEvent; import java.time.*; import java.util.*;
+public class LogSimulator {private final Random r=new Random(); private final String[] users={"admin","student","guest","unknown"}; private final String[] ips={"192.168.1.5","192.168.1.20","10.0.0.8","10.99.0.15"};
+ public SecurityEvent next(){int x=r.nextInt(100);String type=x<48?"LOGIN_SUCCESS":x<80?"LOGIN_FAILED":x<92?"UNKNOWN_USER":"SUSPICIOUS_ACCESS";String user=users[r.nextInt(users.length)],ip=ips[r.nextInt(ips.length)];String d=switch(type){case "LOGIN_SUCCESS"->"Successful user login";case "LOGIN_FAILED"->"Invalid password / failed login";case "UNKNOWN_USER"->"Login attempted with an unknown account";default->"Unusual access pattern detected";};return new SecurityEvent(LocalDateTime.now(),user,ip,type,d);}}
